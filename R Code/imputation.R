@@ -1,5 +1,5 @@
 #################################################################################
-# This is the 5th of 6 scripts to complete the analyses in Wolfe and Stull 2024.#
+# This is the 5th of 6 scripts to complete the analyses in Wolfe and Stull 2026.#
 # The following script imports posterior samples from a fit Stan model and      #
 # prepares the imputation analyses. To do so, we use CmdStanR's GQ Function     #
 # to complete a series of 2 imputation tasks. The Stan models can be found in   #
@@ -46,7 +46,7 @@ draws2 <- read_cmdstan_csv(
                           "man_pm1_constant", "man_pm1_t_pars", "ct_ef_constant", 
                           "ct_ef_t_pars"), sampler_diagnostics = "")
 
-# Figure 3A and 3B
+# Figure 8A, 8B, and 8C
 
 ## Stan Model Data Prep
 dat1 <- dat %>% select(agey,FMSB_L, FDB_L,FDL_L) %>% na.omit()
@@ -67,19 +67,19 @@ fdl <- bind_cols(dat1$FDL_L, summarise_draws(fit_gq1$draws("ypred"))$mean,
 colnames(fdl) <- c("FDL_true", "FDL_impute", "FDL_impute_E")
 fdl$age <- dat1$agey
 
-## Figure 3A
+## Figure 8A
 fdl |> ggplot(aes(x = FDL_true, y = FDL_impute_E)) + 
   geom_point(size = 0.7) + geom_abline(col = "tomato",slope = 1, intercept = 0) +
   xlab("True FDL [mm]") + ylab("FDL Imputed [mm]") +
   theme_classic() + theme(legend.position = "none")
 
-## Figure 3B
+## Figure 8B
 fdl |> ggplot(aes(x = age)) + 
   geom_point(aes(y = FDL_true, fill = "True"),size = 0.7) + geom_point(aes(y = FDL_impute, fill = "Imputed"),col = "tomato", size = 0.7) +
   xlab("Age [years]") + ylab("FDL [mm]") +
   theme_classic() + theme(legend.position = "bottom") + labs(fill = "")
 
-# Figure 3C
+# Figure 8C
 
 ## Stan Model Data Prep
 dat2 <- dat %>% select(agey,HDL_L, man_PM1_L, CT_EF_L) %>% na.omit()
@@ -102,7 +102,6 @@ ct <- bind_cols(dat2$CT_EF_L, summarise_draws(fit_gq2$draws("ypred"))$median,
 colnames(ct) <- c("CT_True", "CT_Impute", "CT_Impute_E")
 ct$age <- dat2$agey
 
-## Figure 3C
 ct |> ggplot(aes(x = age)) + 
   geom_point(aes(y = CT_True, fill = "True"),size = 0.7) + 
   geom_point(aes(y = CT_Impute_E, fill = "Imputed"), col = "tomato", 

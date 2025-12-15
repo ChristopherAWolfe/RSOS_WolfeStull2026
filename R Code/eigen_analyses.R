@@ -1,10 +1,19 @@
 #################################################################################
-# This is the 4th of 6 scripts to complete the analyses in Wolfe and Stull 2024.#
+# This is the 4th of 6 scripts to complete the analyses in Wolfe and Stull 2026.#
 # The following script completes the eigendecomposition analyses. To do so, a   #
 # user must used the mean poster matrix "cmat_mean" generated in                #
 # "correlation_plots.R"                                                         #
 #################################################################################
 
+# Note - this script can be modified based on whether the user wants to get the
+# loadings of all variables (Figure 4), skeletal growth (Figure 5B), skeletal
+# development (Figure 6B), and dental development (Figure 7B).
+
+## Load in the following from "correlation_plots.R":
+## cmat_mean = All variables, Figure 4
+## cmat_diaphyseal = Skeletal growth, Figure 5B
+## cmat_skel_dev = Skeletal development, Figure 6B
+## cmat_dental_dev = Dental development, Figure 7B
 
 eig <- eigen(cmat_mean)
 

@@ -1,5 +1,5 @@
 #################################################################################
-# This is the 1st of 5 scripts to complete the analyses in Wolfe and Stull 2024.#
+# This is the 1st of 6 scripts to complete the analyses in Wolfe and Stull 2026.#
 # The following script prepares the data for modeling. The data file can be     #
 # accessed from a Zenodo repository associated with the SVAD project at         #
 # https://zenodo.org/records/5193208. All questions about the SVAD data can     #

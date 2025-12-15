@@ -1,8 +1,8 @@
 #################################################################################
-# This is the 6th of 6 scripts to complete the analyses in Wolfe and Stull 2024.#
+# This is the 6th of 6 scripts to complete the analyses in Wolfe and Stull 2026.#
 # The following script imports posterior samples from a fit Stan model and      #
-# prepares the age estim procedures. To do so, we use Slice Sampling of the post#
-# to complete age estimation. We compare these results to the MCP               #
+# prepares the age estimation procedures. To do so, we use Slice Sampling of the#
+# posterior to complete age estimation. We compare these results to the MCP     #
 # results. In order to get MCP results we complete the steps at the following   #
 # link: https://rpubs.com/elainechu/mcp_vignette. The data from the 'data_prep.R#
 # script is used in both analyses.                                              #
@@ -252,7 +252,7 @@ results <- foreach(i = 1:nrow(dat2), .combine = "comb",.multicombine = T,
 # CRPS_cop <- crps(cop1, cop2, dat2$agey)
 # CRPS_mcp <- crps(mcp1, mcp2, dat2$agey)
 
-## Prep Figure 4
+## Prep Figure 11
 
 ### MCP Test Predictions
 
@@ -261,7 +261,7 @@ cop <- results[[2]]
 
 df2 <- cbind(dat2$agey,mcp$agey,colMeans(cop, na.rm=T),mcp$xmean)
 
-### Figure 4A
+### Figure 11A
 ggplot() + geom_point(aes(dat2$agey, (dat2$agey - colMeans(cop, na.rm=T)), 
   shape = "Copula"), size=0.5) + geom_smooth(aes(dat2$agey, 
   (dat2$agey - colMeans(cop, na.rm=T)), fill = "Copula"), se=F, 
@@ -275,7 +275,7 @@ ggplot() + geom_point(aes(dat2$agey, (dat2$agey - colMeans(cop, na.rm=T)),
   guides(shape = guide_legend(override.aes = list(size =2))) +
   theme(legend.position = "bottom")
 
-### Figure 4B
+### Figure 11B
 ggplot() + geom_point(aes(dat2$agey, abs((dat2$agey - 
   colMeans(cop, na.rm=T))), shape = "Copula"), size=0.5) +
   geom_smooth(aes(dat2$agey, abs((dat2$agey - colMeans(cop, na.rm=T))), 
@@ -289,7 +289,7 @@ ggplot() + geom_point(aes(dat2$agey, abs((dat2$agey -
   theme_classic() + guides(shape = guide_legend(override.aes = list(size =2))) +
   theme(legend.position = "bottom")
 
-### Figure 4C
+### Figure 11C
 ggplot(mcp) + 
   geom_errorbar(aes(x=agey, ymin=lower95, ymax=upper95), col = "steelblue") + 
   geom_point(aes(x=agey, y=xmode)) + 
@@ -297,7 +297,7 @@ ggplot(mcp) +
   labs(x="Known Age [years]", y="Predicted Age [years]") + 
   theme_bw()
 
-### Figure 4D
+### Figure 11D
 for(i in 1:338){
   
   q1[i] <- quantile(cop[,i], probs = c(0.025, 0.975), na.rm=T)[1]

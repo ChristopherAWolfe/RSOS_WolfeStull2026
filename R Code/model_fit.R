@@ -1,5 +1,5 @@
 #################################################################################
-# This is the 2nd of 5 scripts to complete the analyses in Wolfe and Stull 2024.#
+# This is the 2nd of 6 scripts to complete the analyses in Wolfe and Stull 2026.#
 # The following script uses the data prepared in 'data_prep.R', readies the     #
 # data for a Stan model, and evaluates the log probability density function.    # 
 #################################################################################
@@ -15,6 +15,9 @@ dat <- read.csv("data.analysis.csv")
 mod <- cmdstan_model(stan_file = "MixGaussCop_Growth.stan")
 
 # Prepare Data
+## All variables here are `y` values described in Figure 1 of the main text.
+
+## Continuous Variables
 fdl <- dat$FDL_L
 fmsb <- dat$FMSB_L
 fdb <- dat$FDB_L
@@ -34,6 +37,7 @@ rdb <- dat$RDB_L
 udl <- dat$UDL_L
 umsb <- dat$UMSB_L
 
+## Ordinal Variables
 max_m1 <- dat$max_M1_L
 max_m1[is.na(max_m1)] <- 99
 max_m2 <- dat$max_M2_L
@@ -50,7 +54,6 @@ max_i1 <- dat$max_I1_L
 max_i1[is.na(max_i1)] <- 99
 max_i2 <- dat$max_I2_L
 max_i2[is.na(max_i2)] <- 99
-
 man_m1 <- dat$man_M1_L
 man_m1[is.na(man_m1)] <- 99
 man_m2 <- dat$man_M2_L
@@ -67,7 +70,6 @@ man_i1 <- dat$man_I1_L
 man_i1[is.na(man_i1)] <- 99
 man_i2 <- dat$man_I2_L
 man_i2[is.na(man_i2)] <- 99
-
 fh_ef <- dat$FH_EF_L
 fh_ef[is.na(fh_ef)] <- 99
 fgt_ef <- dat$FGT_EF_L
@@ -113,7 +115,7 @@ tc_oss[is.na(tc_oss)] <- 99
 standat <- list(
   N = nrow(dat),
   M = 54,
-  x = dat$agey,
+  x = dat$agey, # independent variable 'x' in Figure 1. 
   y_FDL = fdl[!is.na(fdl)],
   FDL_complete = length(fdl[!is.na(fdl)]),
   FDL_missing = sum(is.na(fdl)),

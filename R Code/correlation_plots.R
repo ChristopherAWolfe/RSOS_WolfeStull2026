@@ -1,5 +1,5 @@
 #################################################################################
-# This is the 3rd of 6 scripts to complete the analyses in Wolfe and Stull 2024.#
+# This is the 3rd of 6 scripts to complete the analyses in Wolfe and Stull 2026.#
 # The following script imports posterior samples from a fit Stan model and      #
 # prepares correlation plots. A second file 'response_vars.csv' contains        #
 # a full list of response variables to aid in plotting.                         #
@@ -36,7 +36,7 @@ cor_sum <- summarise_draws(corr_draws$post_warmup_draws)
 # Posterior Mean Correlation Matrix
 cmat_mean <- matrix(cor_sum$mean, 54, 54, dimnames = list(resp_vars,resp_vars))
 
-# Full Correlation Plot
+# Full Correlation Plot (Figure 3)
 ggplot(melt(get_upper_tri(cmat_mean), na.rm = TRUE), 
        aes(Var1, Var2, fill=value)) + geom_tile(height=0.8, width=0.8, 
        color = "black") + scale_fill_gradient2(low="blue", mid="white", 
@@ -50,6 +50,7 @@ ggplot(melt(get_upper_tri(cmat_mean), na.rm = TRUE),
 
 
 ## Skeletal Growth
+### Figure 5A
 
 ### Posterior Mean
 cmat_diaphyseal <- cmat_mean[1:18,1:18]
@@ -68,6 +69,7 @@ ggplot(melt(get_upper_tri(cmat_diaphyseal), na.rm = TRUE),
 
 
 ## Skeletal Development
+### Figure 6A
 
 ### Posterior Mean
 cmat_skel_dev <- cmat_mean[35:54,35:54]
@@ -86,6 +88,7 @@ ggplot(melt(get_upper_tri(cmat_skel_dev), na.rm = TRUE),
 
 
 ## Dental Development
+### Figure 7A
 
 ### Posterior Mean
 cmat_dental_dev <- cmat_mean[19:34,19:34]
